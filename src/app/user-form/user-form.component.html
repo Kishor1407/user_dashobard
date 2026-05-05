@@ -1,0 +1,46 @@
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Add New User</h2>
+      <button class="close-btn" (click)="closeModal()">&times;</button>
+    </div>
+    
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" type="text" formControlName="name" placeholder="Enter full name"
+               [ngClass]="{'is-invalid': userForm.get('name')?.invalid && userForm.get('name')?.touched}">
+        <div class="error-message" *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+          Name is required (min 2 characters).
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" type="email" formControlName="email" placeholder="Enter email address"
+               [ngClass]="{'is-invalid': userForm.get('email')?.invalid && userForm.get('email')?.touched}">
+        <div class="error-message" *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+          Please enter a valid email address.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="role">Role</label>
+        <select id="role" formControlName="role"
+                [ngClass]="{'is-invalid': userForm.get('role')?.invalid && userForm.get('role')?.touched}">
+          <option value="Admin">Admin</option>
+          <option value="Editor">Editor</option>
+          <option value="Viewer">Viewer</option>
+        </select>
+        <div class="error-message" *ngIf="userForm.get('role')?.invalid && userForm.get('role')?.touched">
+          Role is required.
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="closeModal()">Cancel</button>
+        <button type="submit" class="btn-primary" [disabled]="userForm.invalid">Add User</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <div class="title-container">
+      <h1>User Dashboard</h1>
+      <p>Manage users and view role distribution</p>
+    </div>
+    <button class="btn-add" (click)="openAddUserForm()">
+      <span class="icon">+</span> Add New User
+    </button>
+  </header>
+
+  <div class="dashboard-content">
+    <div class="card table-card">
+      <div class="card-header table-header-flex">
+        <h2>Users List</h2>
+        <div class="search-container">
+          <input type="text" placeholder="Search users..." (input)="applyFilter($event)" class="search-input">
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of displayedUsers" class="table-row-animate">
+              <td>
+                <div class="user-name">
+                  <div class="avatar">{{ user.name.charAt(0) }}</div>
+                  {{ user.name }}
+                </div>
+              </td>
+              <td>{{ user.email }}</td>
+              <td>
+                <span class="role-badge" [ngClass]="user.role.toLowerCase()">
+                  {{ user.role }}
+                </span>
+              </td>
+            </tr>
+            <tr *ngIf="displayedUsers.length === 0">
+              <td colspan="3" class="empty-state">No users found. Add a user to get started.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card chart-card">
+      <div class="card-header">
+        <h2>Role Distribution</h2>
+      </div>
+      <div class="chart-container">
+        <canvas #chartCanvas></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal container -->
+<ng-container #modalContainer></ng-container>
